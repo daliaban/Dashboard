@@ -1,0 +1,132 @@
+html, body {
+    height: 100%;
+}
+
+.maincontainer {
+    position: relative;
+    min-height: 100%;
+    background-color: ghostwhite;
+}
+
+.container {
+    width : 80%;
+    padding-top: 25px;
+    padding-left: 50px;
+    padding-bottom:60px;   /* Height of the footer */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+header {
+    background-color:cornflowerblue;
+    color: white;
+}
+
+header {
+    margin: 0;
+    padding-top: 2px;
+}
+
+footer {
+    margin-top:30px;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: lightgray;
+    position: absolute;
+}
+
+div#header-content {
+    padding: 10px;
+}
+
+span#head {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+input#search {
+    background-color : lightskyblue;
+    border: 1px solid cornflowerblue;
+    width: 80%;
+    margin: auto;
+    display: inline-block;
+}
+
+#searchsubmit {
+    position: relative;
+    z-index: 1;
+    left: -25px;
+    top: 1px;
+    cursor:pointer;
+    width: 0;
+}
+
+.profileimg {
+    text-align: right;
+}
+
+.error {
+    font-weight: bold;
+    color: red;
+    text-align: center;
+}
+
+.spinner {
+    background-image: url('../images/spinner.gif');
+    background-repeat: no-repeat;
+    width: 25%;
+    margin: auto;
+    padding: 2px 0 5px 30px;
+}
+
+div.content {
+    background-color: white;
+    border-top: 1px solid cornflowerblue;
+}
+
+ul.nav li {
+    display: inline-block;
+}
+
+div.filerow {
+    width: 95%;
+    margin: auto;
+    padding: 12px 20px;
+    border-bottom: 1px solid lightgrey;
+}
+
+div.filerow a {
+    color: cornflowerblue;
+}
+
+div.filerow span i.fa {
+    font-size: 12px;
+}
+
+.elmtitle {
+    color: cornflowerblue;
+    font-weight: bold;
+}
+
+.file-title {
+    font-size: 16px;
+}
+
+a.active {
+    text-decoration: underline;
+}
+
+button.showbtn {
+    width: 90%;
+    margin-left: 25px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+div.sidenav {
+    margin-top: 100px;
+}
+

@@ -1,0 +1,51 @@
+<div class="spinner" ng-show="!error && !numOfUsers">
+    <span>Loading...</span>
+</div>
+<div class="error" ng-show="error">
+    <span>{{error}}</span>
+</div>
+<div class="row" ng-show="numOfUsers">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="profileimg col-md-2">
+                <img src="images/blank-profile-picture-973460_640.png" width="100%">
+            </div>
+            <div class="col-md-10">
+                <h3 style="font-weight: bold">Programmes - Dr Who</h3>
+                <span>This project has {{numOfUsers}} users.</span>
+            </div>
+        </div>
+        <div style="margin-top: 40px;">
+            <h3>Latest Content</h3>
+            <div class="content">
+                <ul class="nav" ng-init="selectTab = 'live'">
+                    <li><a href="#live" ng-class="{'active': selectTab === 'live'}" ng-click="selectTab = 'live'; showLiveFiles()">My content</a></li>
+                    <li><a href="#all" ng-class="{'active': selectTab === 'all'}" ng-click="selectTab = 'all'; showAllFiles()">All</a></li>
+                    <li><a href="#published" ng-class="{'active': selectTab === 'published'}" ng-click="selectTab = 'published'; showPublishedFiles()">Published</a></li>
+                </ul>
+                <div class="showfiles" data-ng-repeat="file in allfiles | limitTo:limit.to">
+                    <div class="filerow">
+                        <span class="file-title elmtitle">{{file.title | titleCase}}</span><br/>
+                        <span><i ng-class="{'In progress': 'fa fa-circle-o', 'Scheduled': 'fa fa-clock-o', 'Published': 'fa fa-circle', 'Approved': 'fa fa-check', 'For review': 'fa fa-comments'}[file.status]" aria-hidden="true"></i>
+                            &nbsp;&nbsp;{{file.type | titleCase}} modified by {{getName(file.modifiedBy)}} on {{file.lastModifiedDate}} &#8212; {{file.status}}</span>
+
+                    </div>
+                </div>
+                <button ng-show="limit.status===true" class="btn showbtn" ng-click="viewAll()">View all content</button>
+                <button ng-show="limit.status===false" class="btn showbtn" ng-click="viewLess()">View less content</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 sidenav">
+        <div class="content">
+            <div class="filerow">
+                <h3>File Types</h3>
+            </div>
+            <div class="showfiles" data-ng-repeat="type in alltypes">
+                <div class="filerow">
+                    <span class="elmtitle">{{$index}}. <a href="#">{{type.name}}</a> <span ng-show="type.documentsCount != 0">({{type.documentsCount}})</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
