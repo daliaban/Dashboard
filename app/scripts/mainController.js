@@ -84,7 +84,5 @@ angular.module('Dashboard')
         };
 
         $scope.showLiveFiles(); //Call it by default
-        $scope.search = function(){
 
-        };
     });

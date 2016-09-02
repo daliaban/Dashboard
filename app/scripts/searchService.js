@@ -10,9 +10,6 @@ angular.module('Dashboard')
             findAllUsers: function(){
                 return $http.get(baseUrl + 'users');
             },
-            findOneUser: function(id){
-                return $http.get(baseUrl + 'users/' + id);
-            },
             findAllTypes: function(){
                 return $http.get(baseUrl + 'types');
             },
