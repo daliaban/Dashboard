@@ -6,60 +6,72 @@
 angular.module('Dashboard')
     .controller('mainCtrl', function($scope, searchRepository){
         $scope.error = '';
-        $scope.limit = {status: true, to: 5};
+        var limit = 5;
+        $scope.limit = {};
         $scope.users = [];
         $scope.alltypes = [];
-
+        
+        //Find all users from API
         searchRepository.findAllUsers().then(
             function(users){
+                //If success, get types and files
                 $scope.numOfUsers = users.data.length;
                 $scope.users = users.data;
+                showTypes();
+                $scope.showLiveFiles();
             },
             function(data) {
-                if (data.status === 500){
-                    $scope.error = "Looks like something went wrong in the backend. Please try again"
+                //If error, show message. Can show different messages based on data.status
+                $scope.error = "Looks like something went wrong in the backend. Please try again";
+            }
+        );
+        
+        var showTypes = function(){
+            searchRepository.findAllTypes().then(
+                function(types){
+                    $scope.alltypes = types.data;
                 }
-            }
-        );
-
-        searchRepository.findAllTypes().then(
-            function(types){
-                $scope.alltypes = types.data;
-            }
-        );
-
+            );
+        };
+        
+            
+        var resetLimit = function(){
+            $scope.limit.status = true;
+            $scope.limit.to = limit;
+        };
+        
         $scope.showAllFiles = function(){
+            resetLimit();
             searchRepository.findAllFiles().then(
                 function(files){
                     $scope.allfiles = files.data;
-                    if ($scope.limit.status === false)
-                        $scope.limit.to = $scope.allfiles.length;
+                    $scope.limit.to = Math.min($scope.allfiles.length, $scope.limit.to);
                 }
             );
         };
 
         $scope.showPublishedFiles = function(){
+            resetLimit();
             searchRepository.findAllFiles().then(
                 function(files){
                     $scope.allfiles = files.data.filter(function(file){
                         if (file.status === "Published")
                             return file;
                     });
-                    if ($scope.limit.status === false)
-                        $scope.limit.to = $scope.allfiles.length;
+                    $scope.limit.to = Math.min($scope.allfiles.length, $scope.limit.to);  
                 }
             );
         };
 
         $scope.showLiveFiles = function(){
+            resetLimit();
             searchRepository.findAllFiles().then(
                 function(files){
                     $scope.allfiles = files.data.filter(function(file){
                         if (file.live === true)
                             return file;
                     });
-                    if ($scope.limit.status === false)
-                        $scope.limit.to = $scope.allfiles.length;
+                    $scope.limit.to = Math.min($scope.allfiles.length, $scope.limit.to);  
                 }
             );
         };
@@ -80,9 +92,7 @@ angular.module('Dashboard')
         };
         $scope.viewLess = function(){
             $scope.limit.status = true;
-            $scope.limit.to = 5;
+            $scope.limit.to = limit;
         };
-
-        $scope.showLiveFiles(); //Call it by default
 
     });

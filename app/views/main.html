@@ -5,13 +5,13 @@
     <span>{{error}}</span>
 </div>
 <div class="row" ng-show="numOfUsers">
-    <div class="col-md-8">
+    <div class="col-md-8 ccol-sm-8">
         <div class="row">
-            <div class="profileimg col-md-2">
-                <img src="images/blank-profile-picture-973460_640.png" width="100%">
+            <div class="profileimg col-md-2 col-xs-4">
+                <img src="images/blank-profile-picture-973460_640.png">
             </div>
-            <div class="col-md-10">
-                <h3 style="font-weight: bold">Programmes - Dr Who</h3>
+            <div class="col-md-10 col-xs-8">
+                <h3 id="statictitle">Programmes - Dr Who</h3>
                 <span>This project has {{numOfUsers}} users.</span>
             </div>
         </div>
@@ -31,12 +31,12 @@
 
                     </div>
                 </div>
-                <button ng-show="limit.status===true" class="btn showbtn" ng-click="viewAll()">View all content</button>
+                <button ng-show="limit.status===true && allfiles.length > limit.to" class="btn showbtn" ng-click="viewAll()">View all content</button>
                 <button ng-show="limit.status===false" class="btn showbtn" ng-click="viewLess()">View less content</button>
             </div>
         </div>
     </div>
-    <div class="col-md-4 sidenav">
+    <div class="col-md-4 col-sm-4 sidenav">
         <div class="content">
             <div class="filerow">
                 <h3>File Types</h3>

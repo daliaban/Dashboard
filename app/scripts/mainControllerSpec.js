@@ -73,7 +73,7 @@ describe('controller:mainCtrl', function() {
     beforeEach(function () {
         module('Dashboard');
 
-        inject(function ($controller, $rootScope, $filter, $httpBackend) {
+        inject(function ($controller, $rootScope, $httpBackend) {
             scope = $rootScope.$new();
             controller = $controller('mainCtrl', {
                 $scope: scope
@@ -102,6 +102,7 @@ describe('controller:mainCtrl', function() {
     it('should be able to show all types', function(){
         expect(scope.alltypes.length).toEqual(2);
         expect(scope.alltypes[0].id).toBe('article');
+        expect(scope.alltypes[1].id).toBe('profile'); 
     });
 
     it('should be return full name of a person given the id', function(){
@@ -109,18 +110,8 @@ describe('controller:mainCtrl', function() {
         expect(name).toEqual('Peter Capaldi');
     });
 
-    it('should be able to show error message when users returns 500', inject(function($httpBackend,searchRepository){
-        $httpBackend.expectGET(url + 'users').respond(500, []);
-        searchRepository.findAllUsers().then(function(resp){
-            expect(resp.length).toEqual(0);
-            expect(scope.error).toBe("Looks like something went wrong in the backend. Please try again");
-        });
-        $httpBackend.flush();
-    }));
-
     it('should be able to show All files', inject(function($httpBackend){
         $httpBackend.expectGET(url + 'files').respond(200, files);
-        scope.limit.status = false;
         scope.showAllFiles();
         $httpBackend.flush();
         expect(scope.allfiles.length).toEqual(2);
@@ -133,6 +124,7 @@ describe('controller:mainCtrl', function() {
         scope.showLiveFiles();
         $httpBackend.flush();
         expect(scope.allfiles.length).toEqual(1);
+        expect(scope.allfiles[0].live).toBe(true);
         expect(scope.limit.to).toEqual(1);
     }));
 
@@ -156,5 +148,27 @@ describe('controller:mainCtrl', function() {
         scope.viewLess();
         expect(scope.limit.status).toBe(true);
         expect(scope.limit.to).toBe(5);
+    });
+});
+
+describe('users 500 error', function(){
+    var scope, controller;
+    var url = 'http://localhost:3001/';
+    beforeEach(function () {
+        module('Dashboard');
+
+        inject(function ($controller, $rootScope, $httpBackend) {
+            scope = $rootScope.$new();
+            controller = $controller('mainCtrl', {
+                $scope: scope
+            });
+
+            $httpBackend.expectGET(url + 'users').respond(500, []);
+            $httpBackend.flush();
+        });
+    });
+    it('should be able to show error message', function(){
+        expect(scope.error).toBe('Looks like something went wrong in the backend. Please try again');
+        expect(scope.users).toEqual([]);
     });
 });

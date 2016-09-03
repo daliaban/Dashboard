@@ -68,6 +68,10 @@ input#search {
     text-align: right;
 }
 
+.profileimg img {
+    width:100%;
+}
+
 .error {
     font-weight: bold;
     color: red;
@@ -130,3 +134,55 @@ div.sidenav {
     margin-top: 100px;
 }
 
+#statictitle {
+    font-weight: bold;
+}
+
+@media all and (max-width:650px){
+    div.container {
+        width : 100%;
+        padding-left: 10px;
+    }
+    #statictitle {
+        margin-top:0;
+    }
+    input#search {
+        margin-top:10px;
+        margin-left:30px;
+    }
+    .profileimg {
+        text-align: left;
+    }
+    
+    button.showbtn {
+        margin-left: 15px;
+    }
+}
+
+@media all and (min-width:700px) and (max-width:800px){
+    div.container {
+        width : 90%;
+        padding-left: 10px;
+    }
+    #statictitle {
+        margin-top:10px;
+    }
+    input#search {
+        margin-top:10px;
+        margin-left:30px;
+    }
+    .profileimg {
+        text-align: left;
+    }
+    
+    button.showbtn {
+        margin-left: 15px;
+    }
+}
+
+@media all and (min-width:992px){
+    #statictitle {
+        margin-top:5px;
+    }
+
+}

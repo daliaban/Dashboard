@@ -1,5 +1,7 @@
 /**
  * Created by dalia on 01/09/16.
+ * This is a service which returns the API data from
+ * the API endpoints provided.
  */
 'use strict';
 
@@ -16,5 +18,5 @@ angular.module('Dashboard')
             findAllFiles: function(){
                 return $http.get(baseUrl + 'files');
             }
-        }
+        };
     });
