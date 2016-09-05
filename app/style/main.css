@@ -29,15 +29,6 @@ header {
     padding-top: 2px;
 }
 
-footer {
-    margin-top:30px;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    background-color: lightgray;
-    position: absolute;
-}
-
 div#header-content {
     padding: 10px;
 }

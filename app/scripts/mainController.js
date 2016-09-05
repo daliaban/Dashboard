@@ -1,5 +1,6 @@
 /**
- * Created by dalia on 01/09/16.
+ * Created on 01/09/16.
+ * This is the controller for the main view.
  */
 'use strict';
 
@@ -25,7 +26,8 @@ angular.module('Dashboard')
                 $scope.error = "Looks like something went wrong in the backend. Please try again";
             }
         );
-        
+
+        //Find all types
         var showTypes = function(){
             searchRepository.findAllTypes().then(
                 function(types){
@@ -39,7 +41,8 @@ angular.module('Dashboard')
             $scope.limit.status = true;
             $scope.limit.to = limit;
         };
-        
+
+        //Find all files
         $scope.showAllFiles = function(){
             resetLimit();
             searchRepository.findAllFiles().then(
@@ -50,6 +53,7 @@ angular.module('Dashboard')
             );
         };
 
+        //Find all 'Published' files
         $scope.showPublishedFiles = function(){
             resetLimit();
             searchRepository.findAllFiles().then(
@@ -63,6 +67,7 @@ angular.module('Dashboard')
             );
         };
 
+        //Find all 'Live' files
         $scope.showLiveFiles = function(){
             resetLimit();
             searchRepository.findAllFiles().then(
@@ -76,6 +81,7 @@ angular.module('Dashboard')
             );
         };
 
+        //Get the Full Name from user objects
         $scope.getName = function(id){
             var fullName = '';
             $scope.users.filter(function(user){
@@ -86,10 +92,14 @@ angular.module('Dashboard')
             return fullName;
         };
 
+        //View all files while clicked on the 'View all content' button
         $scope.viewAll = function(){
             $scope.limit.status = false;
             $scope.limit.to = $scope.allfiles.length;
         };
+
+        //View less files while clicked on the 'View less content' button
+        //Default limit is 5 files
         $scope.viewLess = function(){
             $scope.limit.status = true;
             $scope.limit.to = limit;

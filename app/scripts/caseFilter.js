@@ -1,5 +1,5 @@
 /**
- * Created by dalia on 01/09/16.
+ * Created on 01/09/16.
  * src: http://stackoverflow.com/questions/24039226/angularjs-format-text-return-from-json-to-title-case
  */
 
