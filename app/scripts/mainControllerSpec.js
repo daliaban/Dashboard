@@ -105,50 +105,32 @@ describe('controller:mainCtrl', function() {
         expect(scope.alltypes[1].id).toBe('profile'); 
     });
 
-    it('should be return full name of a person given the id', function(){
-        var name = scope.getName(1);
-        expect(name).toEqual('Peter Capaldi');
-    });
-
     it('should be able to show All files', inject(function($httpBackend){
         $httpBackend.expectGET(url + 'files').respond(200, files);
-        scope.showAllFiles();
+        scope.showFiles("all");
         $httpBackend.flush();
         expect(scope.allfiles.length).toEqual(2);
         expect(scope.limit.to).toEqual(2);
     }));
 
+    it('should be able to show Published files', inject(function($httpBackend){
+        $httpBackend.expectGET(url + 'files').respond(200, files);
+        scope.showFiles("published");
+        $httpBackend.flush();
+        expect(scope.allfiles.length).toEqual(1);
+        expect(scope.limit.to).toEqual(1);
+    }));
+
     it('should be able to show Live files', inject(function($httpBackend){
         $httpBackend.expectGET(url + 'files').respond(200, files);
         scope.limit.status = false;
-        scope.showLiveFiles();
+        scope.showFiles("live");
         $httpBackend.flush();
         expect(scope.allfiles.length).toEqual(1);
         expect(scope.allfiles[0].live).toBe(true);
         expect(scope.limit.to).toEqual(1);
     }));
 
-    it('should be able to show Published files', inject(function($httpBackend){
-        $httpBackend.expectGET(url + 'files').respond(200, files);
-        scope.limit.status = false;
-        scope.showPublishedFiles();
-        $httpBackend.flush();
-        expect(scope.allfiles.length).toEqual(1);
-        expect(scope.limit.to).toEqual(1);
-        expect(scope.allfiles[0].status).toBe('Published');
-    }));
-
-    it('should be able to see all data', function(){
-        scope.viewAll();
-        expect(scope.limit.status).toBe(false);
-        expect(scope.limit.to).toBe(1);
-    });
-
-    it('should be able to see less data', function(){
-        scope.viewLess();
-        expect(scope.limit.status).toBe(true);
-        expect(scope.limit.to).toBe(5);
-    });
 });
 
 describe('users 500 error', function(){

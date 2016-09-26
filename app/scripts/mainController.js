@@ -7,10 +7,14 @@
 angular.module('Dashboard')
     .controller('mainCtrl', function($scope, searchRepository){
         $scope.error = '';
-        var limit = 5;
-        $scope.limit = {};
         $scope.users = [];
         $scope.alltypes = [];
+        $scope.limit = {default: 5}; //Default limit is 5 files
+
+        var resetLimit = function(){
+            $scope.limit.status = true;
+            $scope.limit.to = $scope.limit.default;
+        };
         
         //Find all users from API
         searchRepository.findAllUsers().then(
@@ -19,7 +23,7 @@ angular.module('Dashboard')
                 $scope.numOfUsers = users.data.length;
                 $scope.users = users.data;
                 showTypes();
-                $scope.showLiveFiles();
+                $scope.showFiles("live");
             },
             function(data) {
                 //If error, show message. Can show different messages based on data.status
@@ -35,74 +39,26 @@ angular.module('Dashboard')
                 }
             );
         };
-        
-            
-        var resetLimit = function(){
-            $scope.limit.status = true;
-            $scope.limit.to = limit;
-        };
 
-        //Find all files
-        $scope.showAllFiles = function(){
+        $scope.showFiles = function(type){
             resetLimit();
             searchRepository.findAllFiles().then(
                 function(files){
-                    $scope.allfiles = files.data;
+                    if(type==="all"){
+                        $scope.allfiles = files.data;
+                    }else {
+                        $scope.allfiles = files.data.filter(function(file){
+                            if(type==="published") {
+                                if (file.status === "Published") return file;
+                            }
+                            if (type==="live"){
+                                if (file.live === true) return file;
+                            }
+                        });
+                    }
                     $scope.limit.to = Math.min($scope.allfiles.length, $scope.limit.to);
                 }
             );
-        };
-
-        //Find all 'Published' files
-        $scope.showPublishedFiles = function(){
-            resetLimit();
-            searchRepository.findAllFiles().then(
-                function(files){
-                    $scope.allfiles = files.data.filter(function(file){
-                        if (file.status === "Published")
-                            return file;
-                    });
-                    $scope.limit.to = Math.min($scope.allfiles.length, $scope.limit.to);  
-                }
-            );
-        };
-
-        //Find all 'Live' files
-        $scope.showLiveFiles = function(){
-            resetLimit();
-            searchRepository.findAllFiles().then(
-                function(files){
-                    $scope.allfiles = files.data.filter(function(file){
-                        if (file.live === true)
-                            return file;
-                    });
-                    $scope.limit.to = Math.min($scope.allfiles.length, $scope.limit.to);  
-                }
-            );
-        };
-
-        //Get the Full Name from user objects
-        $scope.getName = function(id){
-            var fullName = '';
-            $scope.users.filter(function(user){
-                if (user.id === id){
-                    fullName = user.givenName + " " + user.familyName;
-                }
-            });
-            return fullName;
-        };
-
-        //View all files while clicked on the 'View all content' button
-        $scope.viewAll = function(){
-            $scope.limit.status = false;
-            $scope.limit.to = $scope.allfiles.length;
-        };
-
-        //View less files while clicked on the 'View less content' button
-        //Default limit is 5 files
-        $scope.viewLess = function(){
-            $scope.limit.status = true;
-            $scope.limit.to = limit;
         };
 
     });
